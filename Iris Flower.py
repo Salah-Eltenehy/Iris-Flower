@@ -27,24 +27,28 @@ classifier.fit(X_train, y_train)
 y_pred = classifier.predict(X_test)
 
 #Evaluating the model
-from sklearn.metrics import confusion_matrix, r2_score
+from sklearn.metrics import confusion_matrix, r2_score, mean_squared_error
 cm = confusion_matrix(y_test, y_pred)
 R2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
 
+#Printing Results
+print('*'*50)
+print('Confusion Matrix:')
+print(cm)
+print('*'*50)
+print('*'*50)
+print("R-Squared Value= ", R2)
+print('*'*50)
+print('*'*50)
+print('Mean-Squared-Error= ', mse)
+print('*'*50)
+
+#Dimensionality Reduction Using Backward Elimination
 import statsmodels.api as sm
 X.insert(0,'Ones', 1)
 X_opt = np.array(X.iloc[:, [0,1,2,3,4]])
 regressor = sm.OLS(y, X_opt).fit()
+
+#OLS Regression Results
 print(regressor.summary())
-"""
-X_opt = np.array(X.iloc[:, [0,1,2,3,4]])
-regressor = sm.OLS(y, X_opt).fit()
-"""
-
-
-
-
-
-
-
-
