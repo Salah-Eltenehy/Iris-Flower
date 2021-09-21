@@ -9,6 +9,15 @@ cols = data_set.shape[1] #Number of Columns
 X = data_set.iloc[:, 0:cols-1] #Independent variables
 y = data_set.iloc[:, cols-1:cols] #dependent variable
 
+print('*'*50)
+print('Data:')
+print(data_set.head(10))
+print('*'*50)
+print('*'*50)
+print('Data.describe:')
+print(data_set.describe())
+print('*'*50)
+
 #Encoding the data
 from sklearn.preprocessing import LabelEncoder
 label_encoder = LabelEncoder()
@@ -47,8 +56,28 @@ print('*'*50)
 #Dimensionality Reduction Using Backward Elimination
 import statsmodels.api as sm
 X.insert(0,'Ones', 1)
-X_opt = np.array(X.iloc[:, [0,1,2,3,4]])
+X_opt = np.array(X.iloc[:, [1,3,4]])
 regressor = sm.OLS(y, X_opt).fit()
 
 #OLS Regression Results
 print(regressor.summary())
+
+#Vislualization
+setosa = data_set[data_set['species'].isin(['Iris-setosa'])]
+versicolor = data_set[data_set['species'].isin(['Iris-versicolor'])]
+virginica = data_set[data_set['species'].isin(['Iris-virginica'])]
+
+fig, ax= plt.subplots()
+ax.scatter(setosa['sepal_length'], setosa['petal_width'],
+           c= 'b', marker= 'o', label= 'setosa'
+           )
+ax.scatter(versicolor['sepal_length'], versicolor['petal_width'],
+           c= 'r', marker= 'x', label= 'versicolor'
+           )
+ax.scatter(virginica['sepal_length'], virginica['petal_width'],
+           c= 'g', marker= '+', label= 'virginica'
+           )
+ax.set_xlabel('sepal_length')
+ax.set_ylabel('petal_width')
+ax.legend()
+
